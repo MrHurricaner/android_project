@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="left_content_items">
+        <item>我的主页</item>
+        <item>代领协议</item>
+        <item>帮助中心</item>
+        <item>帐号设置</item>
+        <item>产品客服</item>
+        <item>系统设置</item>
+        <item>评价我们</item>
+        <item>关于</item>
+    </string-array>
+</resources>
