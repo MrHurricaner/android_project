@@ -13,4 +13,9 @@
     <color name="color_transparent">#00000000</color>
     <color name="color_f0eff5">#f0eff5</color>
     <color name="color_e4e5eD">#E4E5ED</color>
+    <color name="color_ff3b30">#FF3B30</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_e6dfdf">#E6DFDF</color>
+    <color name="color_b2d9d4">#B2D9D4</color>
+    <color name="color_f5b7c0">#F5B7C0</color>
 </resources>
