@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import com.wuli.delivery.base.BasePagedFragment;
 
 /**
- * Created by ziv on 2018/4/25.
+ *
+ * @author ziv
+ * @date 2018/4/25
  */
 
 public class HomeFragment extends BasePagedFragment {
