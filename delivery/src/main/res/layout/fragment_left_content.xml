@@ -27,7 +27,7 @@
         android:src="@drawable/icon_portrait" />
 
     <TextView
-        style="@style/Text_333_34"
+        style="@style/Text_333.34"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         tools:text="Yvette" />
@@ -51,7 +51,7 @@
 
             <TextView
                 android:id="@+id/btn_exit"
-                style="@style/Text_333_34"
+                style="@style/Text_333.34"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:text="@string/action_exit" />
