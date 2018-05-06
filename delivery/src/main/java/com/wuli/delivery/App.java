@@ -1,17 +1,18 @@
 package com.wuli.delivery;
 
-import android.app.Application;
 import android.content.Context;
 
+import com.app.CoreApp;
 import com.app.db.AssetDBVersionManager;
 import com.app.db.DBHelper;
 import com.app.db.DBPathBuilder;
 import com.app.util.FileUtil;
+import com.facebook.stetho.Stetho;
 
 import java.io.File;
 
 
-public class App extends Application {
+public class App extends CoreApp {
 
 
     private final static String TAG = App.class.getSimpleName();
@@ -23,6 +24,11 @@ public class App extends Application {
         super.onCreate();
 
         this.mContext = getApplicationContext();
+
+        // 在线调试数据库
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
 
         AppConstants.init(mContext);
         // 初始化数据库
@@ -55,6 +61,12 @@ public class App extends Application {
                 return new File(dbPath, "portal_user.db").getPath();
             }
         }
+    }
+
+    @Override
+    protected void initICDispatch() {
+        setMaxMessagesOnUILoop(16);
+        setMaxThreadsInConcurrent(64);
     }
 
 }

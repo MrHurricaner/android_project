@@ -19,17 +19,16 @@ public class AppConstants {
     // 数据外置存储目录
     public static String PKG_DIR;
 
-    // 本地区域数据库名字
-    public static final String DBNAME_REGION = "region";
-    // 本地区域数据库路径
-    public static final String DBDIR_ASSET = "file:///android_asset/db/";
-
-    public static final String DBNAME_REGION_FILE = "region.db";
-
     public static String DATA_ROOT_DIR;     // 数据文件根目录
     public static String DATA_ROOT_DIR_OUTER; // 外置卡中数据文件根目录(系统拍照等产生的文件，不允许存放到应用系统目录下)
     public static String CACHE_ROOT_DIR;    // 缓存根目录
     public static String DB_ROOT_DIR;       // 数据库根目录
+
+    public final static class DB {
+
+        public final static String EXPRESSAGE_LEAD_TYPE_RECEIVE = "1";
+        public final static String EXPRESSAGE_LEAD_TYPE_RELEASE = "2";
+    }
 
     public static void init(Context context) {
         final boolean innerFirst = true;

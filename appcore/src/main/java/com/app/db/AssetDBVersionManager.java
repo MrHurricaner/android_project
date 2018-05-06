@@ -8,7 +8,6 @@ public class AssetDBVersionManager implements DBVersionManager {
 	private static final String TAG = "MIBRIDGE.DB";
 	private static final String DB_CREATE_FILE_NAME = "create.sql";
 	private static final String DB_UPGRADE_FILE_NAME = "upgrade.sql";
-	private static final String DB_FILE_DIR = "sql";
 	private static final boolean DEBUG = true;
 
 	private Context context;
@@ -17,13 +16,14 @@ public class AssetDBVersionManager implements DBVersionManager {
 		this.context = context;
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db, String name, int version) {
 		if (DEBUG) {
 			Log.d(TAG, "AssetDBVersionManager.onCreate()");
 		}
 		try {
 			// 执行创建sql文件
-			String sqlfile = DB_FILE_DIR + '/' + name + '/' + DB_CREATE_FILE_NAME;
+			String sqlfile = name + '/' + DB_CREATE_FILE_NAME;
 			if (DEBUG) {
 				Log.d(TAG, "createFilename==" + sqlfile);
 			}
@@ -35,6 +35,7 @@ public class AssetDBVersionManager implements DBVersionManager {
 
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, String name, int oldVersion, int newVersion) {
 		if (DEBUG) {
 			Log.d(TAG, "DBHelper.onUpgrade()," + oldVersion + "-->" + newVersion);
@@ -45,7 +46,7 @@ public class AssetDBVersionManager implements DBVersionManager {
 				Log.d(TAG, "check upgradeFilename[" + upgradeFile + "] exists or not...");
 			}
 			// 先找找从指定oldVersion升级到newVersion的文件有没有
-			String[] list = context.getAssets().list(DB_FILE_DIR + '/' + name);
+			String[] list = context.getAssets().list(name);
 			boolean isFind = false;
 			for (String filename : list) {
 				if (upgradeFile.equals(filename)) {
@@ -56,13 +57,13 @@ public class AssetDBVersionManager implements DBVersionManager {
 			String upgradeFilename = null;
 			if (isFind) {
 				// 找到了就用找到的那个文件
-				upgradeFilename = DB_FILE_DIR + '/' + name + '/' + upgradeFile;
+				upgradeFilename = name + '/' + upgradeFile;
 				if (DEBUG) {
 					Log.d(TAG, "exists,upgradeFilename==" + upgradeFilename);
 				}
 			} else {
 				// 没有，用缺省的
-				upgradeFilename = DB_FILE_DIR + '/' + name + '/' + DB_UPGRADE_FILE_NAME;
+				upgradeFilename = name + '/' + DB_UPGRADE_FILE_NAME;
 				if (DEBUG) {
 					Log.d(TAG, "NOT exists,upgradeFilename==" + upgradeFilename);
 				}

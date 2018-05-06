@@ -38,14 +38,17 @@ public class LeftContentFragment extends Fragment {
     @BindArray(R.array.left_content_items)
     String[] leftContentItems;
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
+    private View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_left_content, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        initData();
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_left_content, container, false);
+            unbinder = ButterKnife.bind(this, rootView);
+            initData();
+        }
         return rootView;
     }
 

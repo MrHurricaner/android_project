@@ -15,6 +15,13 @@ import com.wuli.delivery.base.BasePagedFragment;
  */
 
 public class MyReceiveExpressageListFragment extends BasePagedFragment {
+
+
+    public static MyReceiveExpressageListFragment newInstance() {
+        MyReceiveExpressageListFragment myReceiveExpressageListFragment = new MyReceiveExpressageListFragment();
+        return myReceiveExpressageListFragment;
+    }
+
     @Override
     public String getTitle() {
         return null;

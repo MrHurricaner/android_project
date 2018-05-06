@@ -2,11 +2,11 @@ package com.wuli.delivery.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wuli.delivery.R;
 import com.wuli.delivery.base.BasePagedFragment;
 
 /**
@@ -16,6 +16,15 @@ import com.wuli.delivery.base.BasePagedFragment;
  */
 
 public class UserCenterFragment extends BasePagedFragment {
+
+    private View rootView;
+
+
+    public static UserCenterFragment newInstance() {
+        UserCenterFragment userCenterFragment = new UserCenterFragment();
+        return userCenterFragment;
+    }
+
 
     @Override
     public String getTitle() {
@@ -29,6 +38,9 @@ public class UserCenterFragment extends BasePagedFragment {
 
     @Override
     protected View onCreatePage(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return null;
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_user_center, container, false);
+        }
+        return rootView;
     }
 }

@@ -15,6 +15,13 @@ import com.wuli.delivery.base.BasePagedFragment;
 
 public class WuliCircleFragment extends BasePagedFragment {
 
+
+    public static WuliCircleFragment newInstance() {
+        WuliCircleFragment wuliCircleFragment = new WuliCircleFragment();
+        return wuliCircleFragment;
+    }
+
+
     @Override
     public String getTitle() {
         return null;

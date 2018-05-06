@@ -2,17 +2,31 @@ package com.wuli.delivery.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.icdispatch.ICBlock;
 import com.app.activity.CoreFragmentActivity;
+import com.wuli.delivery.App;
 import com.wuli.delivery.R;
+import com.wuli.delivery.base.BasePagedFragment;
+import com.wuli.delivery.portal.bean.Expressage;
+import com.wuli.delivery.portal.bean.dao.ExpressageDao;
+import com.wuli.delivery.view.CustomViewPager;
 
+import java.util.Random;
+
+import butterknife.BindArray;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,9 +55,22 @@ public class MainActivity extends CoreFragmentActivity {
     RadioButton rbWuliCircle;
     @BindView(R.id.rb_user_center)
     RadioButton rbUserCenter;
+    @BindView(R.id.iv_release_expressage)
+    ImageView ivReleaseExpressage;
+    @BindView(R.id.viewPager_content)
+    CustomViewPager viewPagerContent;
+    @BindView(R.id.layout_main_content)
+    LinearLayout layoutMainContent;
+    @BindView(R.id.layout_top_title)
+    RelativeLayout layoutTopTitle;
+    @BindArray(R.array.expressage_type_list)
+    String[] expressageTypeList;
+    @BindArray(R.array.expressage_lead_type_list)
+    String[] expressageLeadTypeList;
 
     private Unbinder unbinder;
     private DrawerLayout.SimpleDrawerListener mSimpleDrawerListener;
+    private static final BasePagedFragment[] fragments = {HomeFragment.newInstance(), ExpressageFragment.newInstance(), WuliCircleFragment.newInstance(), UserCenterFragment.newInstance()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +80,14 @@ public class MainActivity extends CoreFragmentActivity {
         mSimpleDrawerListener = new MySimpleDrawerListener();
         layoutDrawer.addDrawerListener(mSimpleDrawerListener);
         layoutDrawer.setScrimColor(Color.TRANSPARENT);
+        viewPagerContent.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+        viewPagerContent.setPagingEnabled(false);
+        viewPagerContent.setOffscreenPageLimit(4);
+
         showTab(0);
     }
 
-    @OnClick({R.id.iv_open_left_content, R.id.iv_chat})
+    @OnClick({R.id.iv_open_left_content, R.id.iv_chat, R.id.iv_release_expressage, R.id.layout_top_title})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_open_left_content:
@@ -69,6 +100,33 @@ public class MainActivity extends CoreFragmentActivity {
             case R.id.iv_chat:
                 Toast.makeText(this, msgNotSupportChat, Toast.LENGTH_LONG).show();
                 break;
+            case R.id.iv_release_expressage:
+                ReleaseExpressageLeadDialogFragment dialogFragment = new ReleaseExpressageLeadDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), dialogFragment.getClass().getSimpleName());
+                break;
+            case R.id.layout_top_title:
+                App.executeOn(App.getConcurrentThread(), new ICBlock() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 10; i++) {
+                            ExpressageDao.save(new Expressage.Builder()
+                                    .expressageLeadNum("2020202093010")
+                                    .expressageLeadType(i % 2 == 0 ? "1" : "2")
+                                    .deliveryTime("2018-10-07")
+                                    .deliverySite("送15栋到一楼")
+                                    .expressageDesc("赛鲸笔记本电脑可折叠")
+                                    .expressageLeadReward("2")
+                                    .expressageType(expressageTypeList[new Random().nextInt(3)])
+                                    .deliveryUserName("王悦")
+                                    .deliveryPhoneNumber("18925204762")
+                                    .expressageLeadRemark("谢谢帮忙的小仙女，今日内取！")
+                                    .expressageStatus(String.valueOf(new Random().nextInt(3)))
+                                    .build());
+
+                        }
+                    }
+                });
+                break;
             default:
                 break;
         }
@@ -79,6 +137,7 @@ public class MainActivity extends CoreFragmentActivity {
         switch (buttonView.getId()) {
             case R.id.rb_home:
                 if (isChecked) {
+                    viewPagerContent.setCurrentItem(0);
                     rbExpressDelivery.setChecked(false);
                     rbWuliCircle.setChecked(false);
                     rbUserCenter.setChecked(false);
@@ -86,6 +145,7 @@ public class MainActivity extends CoreFragmentActivity {
                 break;
             case R.id.rb_express_delivery:
                 if (isChecked) {
+                    viewPagerContent.setCurrentItem(1);
                     rbHome.setChecked(false);
                     rbWuliCircle.setChecked(false);
                     rbUserCenter.setChecked(false);
@@ -93,6 +153,7 @@ public class MainActivity extends CoreFragmentActivity {
                 break;
             case R.id.rb_wuli_circle:
                 if (isChecked) {
+                    viewPagerContent.setCurrentItem(2);
                     rbHome.setChecked(false);
                     rbExpressDelivery.setChecked(false);
                     rbUserCenter.setChecked(false);
@@ -100,6 +161,7 @@ public class MainActivity extends CoreFragmentActivity {
                 break;
             case R.id.rb_user_center:
                 if (isChecked) {
+                    viewPagerContent.setCurrentItem(3);
                     rbHome.setChecked(false);
                     rbExpressDelivery.setChecked(false);
                     rbWuliCircle.setChecked(false);
@@ -159,6 +221,23 @@ public class MainActivity extends CoreFragmentActivity {
         @Override
         public void onDrawerStateChanged(int newState) {
             super.onDrawerStateChanged(newState);
+        }
+    }
+
+    static class MyPageAdapter extends FragmentPagerAdapter {
+
+        public MyPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments[position];
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.length;
         }
     }
 }

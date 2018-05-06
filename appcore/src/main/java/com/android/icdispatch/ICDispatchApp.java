@@ -15,13 +15,14 @@ package com.android.icdispatch;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import java.util.Collection;
-import java.util.concurrent.LinkedBlockingQueue;
+
 import android.app.Application;
-import android.os.Handler;
 import android.os.Looper;
 
 import com.app.activity.WeakHandler;
+
+import java.util.Collection;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by johanrisch on 6/21/13.

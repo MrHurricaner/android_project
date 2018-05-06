@@ -8,7 +8,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/tv_delivery_time"
+        android:id="@+id/tv_received_delivery_time"
         style="@style/Text_333.24"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -18,10 +18,10 @@
         android:id="@+id/space1"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/tv_delivery_time" />
+        android:layout_below="@id/tv_received_delivery_time" />
 
     <TextView
-        android:id="@+id/tv_delivery_type"
+        android:id="@+id/tv_received_delivery_type"
         style="@style/Text_333.24"
         android:layout_below="@id/space1"
         tools:text="申通快递 蓝鲸笔记本电脑桌可折叠" />
@@ -30,10 +30,10 @@
         android:id="@+id/space2"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/tv_delivery_type" />
+        android:layout_below="@id/tv_received_delivery_type" />
 
     <TextView
-        android:id="@+id/tv_delivery_number"
+        android:id="@+id/tv_received_delivery_number"
         style="@style/Text_333.24"
         android:layout_below="@id/space2"
         tools:text="取货号： Z227" />
@@ -42,10 +42,10 @@
         android:id="@+id/space3"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/tv_delivery_number" />
+        android:layout_below="@id/tv_received_delivery_number" />
 
     <TextView
-        android:id="@+id/tv_delivery_remark"
+        android:id="@+id/tv_received_delivery_remark"
         style="@style/Text_333.24"
         android:layout_below="@id/space3"
         tools:text="代领备注： 今日内10点" />
@@ -54,16 +54,17 @@
         android:id="@+id/space4"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/tv_delivery_remark" />
+        android:layout_below="@id/tv_received_delivery_remark" />
 
     <TextView
+        android:id="@+id/tv_received_expressage_lead_reward"
         style="@style/Text_ff3b30.24"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         tools:text="报酬：1元" />
 
     <com.wuli.delivery.view.RoundedTextView
-        android:id="@+id/tv_delivery_status"
+        android:id="@+id/tv_received_delivery_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -83,7 +84,7 @@
         app:rtv_background_color="@color/color_ff3b30"
         app:rtv_border_color="@color/color_f5b7c0"
         app:rtv_corner_radius="8dp"
-        tools:text="查看代领信息" />
+        android:text="查看代领信息" />
 
     <com.wuli.delivery.view.RoundedTextView
         android:id="@+id/tv_check_expressage_lead_person"
@@ -96,6 +97,6 @@
         app:rtv_background_color="@color/color_ff3b30"
         app:rtv_border_color="@color/color_f5b7c0"
         app:rtv_corner_radius="8dp"
-        tools:text="查看带领人" />
+        android:text="查看带领人" />
 
 </RelativeLayout>

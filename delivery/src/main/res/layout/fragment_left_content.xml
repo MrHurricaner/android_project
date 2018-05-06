@@ -12,10 +12,10 @@
 
     <ImageView
         android:id="@+id/iv_qrcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:contentDescription="qrcode"
-        android:src="@drawable/icon_switch_drawer" />
+        android:src="@drawable/icon_qr_code" />
 
     <ImageView
         android:layout_width="80dp"

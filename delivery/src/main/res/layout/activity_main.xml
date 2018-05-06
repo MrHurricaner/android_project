@@ -15,6 +15,7 @@
         android:showDividers="middle">
 
         <RelativeLayout
+            android:id="@+id/layout_top_title"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:paddingLeft="12dp"
@@ -50,8 +51,8 @@
             android:orientation="vertical"
             android:showDividers="middle">
 
-            <FrameLayout
-                android:id="@+id/layout_content"
+            <com.wuli.delivery.view.CustomViewPager
+                android:id="@+id/viewPager_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -87,15 +88,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:button="@drawable/nav_category"
+                        android:button="@drawable/nav_delivery"
                         android:duplicateParentState="true" />
                 </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/iv_release_expressage"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_gravity="bottom"
-                    android:src="@drawable/icon_addcart" />
+                    android:src="@drawable/icon_release_expressage" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -107,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:button="@drawable/nav_shopping_cart"
+                        android:button="@drawable/nav_wuli_cirlce"
                         android:duplicateParentState="true" />
                 </RelativeLayout>
 

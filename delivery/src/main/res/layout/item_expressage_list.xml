@@ -18,7 +18,7 @@
         tools:text="取货号：Z227" />
 
     <TextView
-        android:id="@+id/tv_expressage_remoark"
+        android:id="@+id/tv_expressage_remark"
         style="@style/Text_333.24"
         android:layout_marginTop="4dp"
         tools:text="备注：是啥时候好1借记卡kj" />

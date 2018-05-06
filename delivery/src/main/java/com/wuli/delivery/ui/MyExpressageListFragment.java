@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import com.wuli.delivery.R;
 import com.wuli.delivery.base.BasePagedFragment;
+import com.wuli.delivery.portal.bean.dao.ExpressageDao;
+import com.wuli.delivery.ui.adapters.MyExpressageListAdapter;
 import com.wuli.delivery.view.RoundedTextView;
 
 import butterknife.BindView;
@@ -34,6 +36,11 @@ public class MyExpressageListFragment extends BasePagedFragment {
     private Unbinder unbinder;
 
 
+    public static MyExpressageListFragment newInstance() {
+        MyExpressageListFragment myExpressageListFragment = new MyExpressageListFragment();
+        return myExpressageListFragment;
+    }
+
     @Override
     public String getTitle() {
         return null;
@@ -41,6 +48,7 @@ public class MyExpressageListFragment extends BasePagedFragment {
 
     @Override
     protected void onPageStart() {
+        listviewExpressage.setAdapter(new MyExpressageListAdapter(ExpressageDao.getAllExpressageList()));
     }
 
     @Override

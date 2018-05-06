@@ -193,7 +193,7 @@ public class DBHelper {
 	}
 
 	// 数据库执行
-	public static void execSQL(SQLiteDatabase db, String sql, Object[] bindArgs) {
+	public void execSQL(SQLiteDatabase db, String sql, Object[] bindArgs) {
 		try {
 			db.execSQL(sql, bindArgs);
 		} catch (Exception e) {
