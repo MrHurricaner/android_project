@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +22,10 @@ import com.wuli.delivery.App;
 import com.wuli.delivery.R;
 import com.wuli.delivery.base.BasePagedFragment;
 import com.wuli.delivery.portal.bean.Expressage;
-import com.wuli.delivery.portal.bean.dao.ExpressageDao;
+import com.wuli.delivery.portal.dao.ExpressageDao;
+import com.wuli.delivery.portal.event.Event;
+import com.wuli.delivery.portal.event.EventPublisher;
+import com.wuli.delivery.utils.DateUtil;
 import com.wuli.delivery.view.CustomViewPager;
 
 import java.util.Random;
@@ -65,7 +69,7 @@ public class MainActivity extends CoreFragmentActivity {
     RelativeLayout layoutTopTitle;
     @BindArray(R.array.expressage_type_list)
     String[] expressageTypeList;
-    @BindArray(R.array.expressage_lead_type_list)
+    @BindArray(R.array.expressage_release_status_list)
     String[] expressageLeadTypeList;
 
     private Unbinder unbinder;
@@ -75,6 +79,7 @@ public class MainActivity extends CoreFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
         mSimpleDrawerListener = new MySimpleDrawerListener();
@@ -109,9 +114,10 @@ public class MainActivity extends CoreFragmentActivity {
                     @Override
                     public void run() {
                         for (int i = 0; i < 10; i++) {
-                            ExpressageDao.save(new Expressage.Builder()
+                            Expressage expressage = new Expressage.Builder()
                                     .expressageLeadNum("2020202093010")
                                     .expressageLeadType(i % 2 == 0 ? "1" : "2")
+                                    .releaseTime(DateUtil.currentTime(DateUtil.DATETIME_FORMAT_02))
                                     .deliveryTime("2018-10-07")
                                     .deliverySite("送15栋到一楼")
                                     .expressageDesc("赛鲸笔记本电脑可折叠")
@@ -120,10 +126,19 @@ public class MainActivity extends CoreFragmentActivity {
                                     .deliveryUserName("王悦")
                                     .deliveryPhoneNumber("18925204762")
                                     .expressageLeadRemark("谢谢帮忙的小仙女，今日内取！")
-                                    .expressageStatus(String.valueOf(new Random().nextInt(3)))
-                                    .build());
+                                    .build();
+
+                            if ("1".equals(expressage.getExpressageLeadType())) {
+                                expressage.setExpressageReleaseStatus(String.valueOf(new Random().nextInt(3)));
+                            } else {
+                                expressage.setExpressageReceiveStatus(String.valueOf(new Random().nextInt(2)));
+                            }
+
+                            ExpressageDao.save(expressage);
 
                         }
+
+                        EventPublisher.getInstance().sendInsertDataSuccEvent(new Event.InsertDataSuccEvent());
                     }
                 });
                 break;

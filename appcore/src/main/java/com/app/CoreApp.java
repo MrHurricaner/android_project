@@ -1,20 +1,14 @@
 package com.app;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.icdispatch.ICDispatchApp;
-import com.app.config.Config;
-import com.app.config.ConfigModule;
-import com.app.db.AssetDBVersionManager;
-import com.app.db.DBHelper;
-import com.app.exception.CustomerException;
-import com.app.log.LogManager;
-import com.app.netstatecontrol.NetConnectivity;
-import com.app.safe.SafeControl;
-import com.app.util.AndroidUtil;
 
 public abstract class CoreApp extends ICDispatchApp {
+
+	public static Context getContext() {
+		return context;
+	}
 
 	public static Context context;
 

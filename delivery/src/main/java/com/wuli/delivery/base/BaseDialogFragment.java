@@ -19,6 +19,8 @@ import butterknife.Unbinder;
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
+    int gravity = Gravity.BOTTOM;
+
     Unbinder unbinder;
 
     @Nullable
@@ -51,9 +53,14 @@ public abstract class BaseDialogFragment extends DialogFragment {
         getDialog().setCanceledOnTouchOutside(true);
         getDialog().setCancelable(true);
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        getDialog().getWindow().setGravity(Gravity.BOTTOM);
+        getDialog().getWindow().setGravity(gravity);
     }
 
     public abstract View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container);
+
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
+    }
+
 }
 

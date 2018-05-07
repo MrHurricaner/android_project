@@ -26,8 +26,8 @@ public class AppConstants {
 
     public final static class DB {
 
-        public final static String EXPRESSAGE_LEAD_TYPE_RECEIVE = "1";
-        public final static String EXPRESSAGE_LEAD_TYPE_RELEASE = "2";
+        public final static String EXPRESSAGE_LEAD_TYPE_RELEASE = "1";
+        public final static String EXPRESSAGE_LEAD_TYPE_RECEIVE = "2";
     }
 
     public static void init(Context context) {

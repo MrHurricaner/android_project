@@ -3,17 +3,19 @@
 -- 用户表
 create table express_info
 (
-    expressage_id int auto_increment primary key,
+    expressage_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     expressage_lead_num varchar,
-    delivery_time varchar,
-    delivery_site varchar,
+    expressage_delivery_time varchar,
+    expressage_delivery_site varchar,
+    expressage_release_time varchar,
     expressage_desc varchar,
     expressage_lead_reward varchar,
     expressage_lead_type varchar,
-    delivery_user_name varchar,
-    delivery_phone_number varchar,
+    expressage_delivery_user_name varchar,
+    expressage_delivery_phone_number varchar,
     expressage_lead_remark varchar,
-    expressage_status varchar,
+    expressage_release_status varchar,
+    expressage_receive_status varchar,
     expressage_type varchar
 );
 

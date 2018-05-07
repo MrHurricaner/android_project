@@ -33,6 +33,11 @@ public class MyReleaseExpressageListAdapter extends android.widget.BaseAdapter {
         this.expressageList = expressageList;
     }
 
+    public void notifyDataSetChanged(List<Expressage> expressageList) {
+        this.expressageList = expressageList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         if (expressageList == null) {
@@ -69,8 +74,8 @@ public class MyReleaseExpressageListAdapter extends android.widget.BaseAdapter {
         }
 
         Expressage expressage = expressageList.get(position);
-        String[] leadTypeList = parent.getContext().getResources().getStringArray(R.array.expressage_lead_type_list);
-        int expressageStatus = Integer.valueOf(expressage.getExpressageStatus());
+        String[] leadTypeList = parent.getContext().getResources().getStringArray(R.array.expressage_release_status_list);
+        int expressageStatus = Integer.valueOf(expressage.getExpressageReleaseStatus());
 
         if (baseViewHolder instanceof WaittingReceivedViewholder) {
             WaittingReceivedViewholder viewholder = (WaittingReceivedViewholder) baseViewHolder;
@@ -103,7 +108,7 @@ public class MyReleaseExpressageListAdapter extends android.widget.BaseAdapter {
     public int getItemViewType(int position) {
 
         if (expressageList != null) {
-            return Integer.valueOf(expressageList.get(position).getExpressageStatus());
+            return Integer.valueOf(expressageList.get(position).getExpressageReleaseStatus());
         }
         return super.getItemViewType(position);
     }

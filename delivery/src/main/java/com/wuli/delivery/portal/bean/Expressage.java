@@ -7,6 +7,9 @@ package com.wuli.delivery.portal.bean;
 
 public class Expressage {
 
+    private final static String[] EXPRESSAGERELEASESTATUSLIST = {"等待接单", "已被接单", "已完成"};
+    private final static String[] EXPRESSAGERECEIVESTATUSLIST = {"正在代领", "已完成"};
+
     /**
      * 快递id
      */
@@ -20,10 +23,13 @@ public class Expressage {
      */
     private String deliveryTime;
     /**
+     * 快递发布时间
+     */
+    private String releaseTime;
+    /**
      * 快递送达地点
      */
     private String deliverySite;
-
     /**
      * 包裹描述
      */
@@ -52,9 +58,14 @@ public class Expressage {
      */
     private String expressageLeadRemark;
     /**
-     * 快递状态
+     * 自己发布的包裹状态
      */
-    private String expressageStatus;
+    private String expressageReleaseStatus;
+
+    /**
+     * 代领的包裹状态
+     */
+    private String expressageReceiveStatus;
 
     /**
      * 快递类型 韵达快递 申通快递
@@ -129,12 +140,20 @@ public class Expressage {
         this.expressageLeadRemark = expressageLeadRemark;
     }
 
-    public String getExpressageStatus() {
-        return expressageStatus;
+    public String getExpressageReleaseStatus() {
+        return expressageReleaseStatus;
     }
 
-    public void setExpressageStatus(String expressageStatus) {
-        this.expressageStatus = expressageStatus;
+    public void setExpressageReleaseStatus(String expressageReleaseStatus) {
+        this.expressageReleaseStatus = expressageReleaseStatus;
+    }
+
+    public String getExpressageReceiveStatus() {
+        return expressageReceiveStatus;
+    }
+
+    public void setExpressageReceiveStatus(String expressageReceiveStatus) {
+        this.expressageReceiveStatus = expressageReceiveStatus;
     }
 
     public String getExpressageType() {
@@ -161,17 +180,35 @@ public class Expressage {
         this.expressageDesc = expressageDesc;
     }
 
-    Expressage(String expressageID, String expressageLeadNum, String deliveryTime, String deliverySite, String expressageDesc, String expressageLeadReward, String deliveryUserName, String deliveryPhoneNumber, String expressageLeadRemark, String expressageStatus, String expressageType, String expressageLeadType) {
+    public String getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(String releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    public String getExpressageStatus() {
+        if ("1".equals(expressageLeadType)) {
+            return EXPRESSAGERELEASESTATUSLIST[Integer.valueOf(expressageReleaseStatus)];
+        } else {
+            return EXPRESSAGERECEIVESTATUSLIST[Integer.valueOf(expressageReceiveStatus)];
+        }
+    }
+
+    Expressage(String expressageID, String expressageLeadNum, String deliveryTime, String releaseTime, String deliverySite, String expressageDesc, String expressageLeadReward, String deliveryUserName, String deliveryPhoneNumber, String expressageLeadRemark, String expressageStatus, String expressageReceiveStatus, String expressageType, String expressageLeadType) {
         this.expressageID = expressageID;
         this.expressageLeadNum = expressageLeadNum;
         this.deliveryTime = deliveryTime;
+        this.releaseTime = releaseTime;
         this.deliverySite = deliverySite;
         this.expressageDesc = expressageDesc;
         this.expressageLeadReward = expressageLeadReward;
         this.deliveryUserName = deliveryUserName;
         this.deliveryPhoneNumber = deliveryPhoneNumber;
         this.expressageLeadRemark = expressageLeadRemark;
-        this.expressageStatus = expressageStatus;
+        this.expressageReleaseStatus = expressageStatus;
+        this.expressageReceiveStatus = expressageReceiveStatus;
         this.expressageType = expressageType;
         this.expressageLeadType = expressageLeadType;
 
@@ -191,6 +228,10 @@ public class Expressage {
          * 快递送达时间
          */
         private String deliveryTime;
+        /**
+         * 快递发布时间
+         */
+        private String releaseTime;
         /**
          * 快递送达地点
          */
@@ -220,9 +261,14 @@ public class Expressage {
          */
         private String expressageLeadRemark;
         /**
-         * 快递状态
+         * 自己发布的包裹状态
          */
-        private String expressageStatus;
+        private String expressageReleaseStatus;
+
+        /**
+         * 代领的包裹状态
+         */
+        private String expressageReceiveStatus;
         /**
          * 快递类型 韵达快递 申通快递
          */
@@ -248,6 +294,11 @@ public class Expressage {
             return this;
         }
 
+        public Builder releaseTime(String releaseTime) {
+            this.releaseTime = releaseTime;
+            return this;
+        }
+
         public Builder expressageLeadReward(String expressageLeadReward) {
             this.expressageLeadReward = expressageLeadReward;
             return this;
@@ -268,8 +319,13 @@ public class Expressage {
             return this;
         }
 
-        public Builder expressageStatus(String expressageStatus) {
-            this.expressageStatus = expressageStatus;
+        public Builder expressageReleaseStatus(String expressageReleaseStatus) {
+            this.expressageReleaseStatus = expressageReleaseStatus;
+            return this;
+        }
+
+        public Builder expressageReceiveStatus(String expressageReceiveStatus) {
+            this.expressageReceiveStatus = expressageReceiveStatus;
             return this;
         }
 
@@ -296,21 +352,23 @@ public class Expressage {
             this.expressageID = expressage.expressageID;
             this.expressageLeadNum = expressage.expressageLeadNum;
             this.deliveryTime = expressage.deliveryTime;
+            this.releaseTime = expressage.releaseTime;
             this.deliverySite = expressage.deliverySite;
             this.expressageDesc = expressage.expressageDesc;
             this.expressageLeadReward = expressage.expressageLeadReward;
             this.deliveryUserName = expressage.deliveryUserName;
             this.deliveryPhoneNumber = expressage.deliveryPhoneNumber;
             this.expressageLeadRemark = expressage.expressageLeadRemark;
-            this.expressageStatus = expressage.expressageStatus;
+            this.expressageReleaseStatus = expressage.expressageReleaseStatus;
+            this.expressageReceiveStatus = expressage.expressageReceiveStatus;
             this.expressageType = expressage.expressageType;
             this.expressageLeadType = expressage.expressageLeadType;
         }
 
         public Expressage build() {
-            return new Expressage(this.expressageID, this.expressageLeadNum, this.deliveryTime,
+            return new Expressage(this.expressageID, this.expressageLeadNum, this.deliveryTime, this.releaseTime,
                     this.deliverySite, this.expressageDesc, this.expressageLeadReward, this.deliveryUserName,
-                    this.deliveryPhoneNumber, this.expressageLeadRemark, this.expressageStatus, this.expressageType, this.expressageLeadType);
+                    this.deliveryPhoneNumber, this.expressageLeadRemark, this.expressageReleaseStatus, this.expressageReceiveStatus, this.expressageType, this.expressageLeadType);
         }
 
     }

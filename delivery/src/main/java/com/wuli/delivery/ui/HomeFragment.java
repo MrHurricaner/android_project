@@ -12,8 +12,13 @@ import android.widget.Spinner;
 import com.wuli.delivery.AppConstants;
 import com.wuli.delivery.R;
 import com.wuli.delivery.base.BasePagedFragment;
-import com.wuli.delivery.portal.bean.dao.ExpressageDao;
+import com.wuli.delivery.portal.dao.ExpressageDao;
+import com.wuli.delivery.portal.event.Event;
+import com.wuli.delivery.portal.event.EventPublisher;
 import com.wuli.delivery.ui.adapters.HomeExpressageListAdapter;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +38,7 @@ public class HomeFragment extends BasePagedFragment {
 
     private Unbinder unbinder;
     private View rootView;
+    private HomeExpressageListAdapter mAdapter;
 
 
     public static HomeFragment newInstance() {
@@ -47,6 +53,7 @@ public class HomeFragment extends BasePagedFragment {
 
     @Override
     protected void onPageStart() {
+
     }
 
     @Override
@@ -54,6 +61,7 @@ public class HomeFragment extends BasePagedFragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
             unbinder = ButterKnife.bind(this, rootView);
+            EventPublisher.getInstance().register(this);
             initData();
         }
         return rootView;
@@ -61,7 +69,13 @@ public class HomeFragment extends BasePagedFragment {
 
     private void initData() {
         spinner.setAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.search_condition_items, android.R.layout.simple_spinner_item));
-        listviewHomeExpressageList.setAdapter(new HomeExpressageListAdapter(ExpressageDao.getExpressageListByLeadType(AppConstants.DB.EXPRESSAGE_LEAD_TYPE_RECEIVE)));
+        mAdapter = new HomeExpressageListAdapter(ExpressageDao.getExpressageListByLeadType(AppConstants.DB.EXPRESSAGE_LEAD_TYPE_RECEIVE));
+        listviewHomeExpressageList.setAdapter(mAdapter);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInsertDataSuccEvent(Event.InsertDataSuccEvent event) {
+        mAdapter.notifyDataSetChanged(ExpressageDao.getExpressageListByLeadType(AppConstants.DB.EXPRESSAGE_LEAD_TYPE_RECEIVE));
     }
 
     @Override
@@ -70,5 +84,6 @@ public class HomeFragment extends BasePagedFragment {
         if (unbinder != null) {
             unbinder.unbind();
         }
+        EventPublisher.getInstance().unRegister(this);
     }
 }
