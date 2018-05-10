@@ -8,6 +8,7 @@ import com.app.db.DBHelper;
 import com.app.db.DBPathBuilder;
 import com.app.util.FileUtil;
 import com.facebook.stetho.Stetho;
+import com.wuli.delivery.portal.ImageLoader;
 
 import java.io.File;
 
@@ -31,6 +32,8 @@ public class App extends CoreApp {
         DBHelper.getInstance().init(context, new AssetDBVersionManager(context));
 
         DBHelper.getInstance().initDB(AppConstants.DBNAME_COMMON, 1, new MyDBPathBuilder(null));
+
+        ImageLoader.getInstance().init(this);
     }
 
     class MyDBPathBuilder implements DBPathBuilder {

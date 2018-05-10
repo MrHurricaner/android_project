@@ -1,1 +1,1 @@
-include ':delivery','appcore'
+include ':delivery', ':mylibrary','appcore'

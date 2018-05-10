@@ -1,7 +1,11 @@
 package com.wuli.delivery.ui;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,6 +25,9 @@ import com.app.activity.CoreFragmentActivity;
 import com.wuli.delivery.App;
 import com.wuli.delivery.R;
 import com.wuli.delivery.base.BasePagedFragment;
+import libcore.io.DiskLruCache;
+
+import com.wuli.delivery.portal.ImageLoader;
 import com.wuli.delivery.portal.bean.Expressage;
 import com.wuli.delivery.portal.dao.ExpressageDao;
 import com.wuli.delivery.portal.event.Event;
@@ -28,6 +35,8 @@ import com.wuli.delivery.portal.event.EventPublisher;
 import com.wuli.delivery.utils.DateUtil;
 import com.wuli.delivery.view.CustomViewPager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 import butterknife.BindArray;
@@ -42,6 +51,8 @@ import butterknife.Unbinder;
  * @author ziv
  */
 public class MainActivity extends CoreFragmentActivity {
+
+    private final static String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.iv_open_left_content)
     ImageView ivOpenLeftContent;
@@ -92,6 +103,8 @@ public class MainActivity extends CoreFragmentActivity {
         showTab(0);
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick({R.id.iv_open_left_content, R.id.iv_chat, R.id.iv_release_expressage, R.id.layout_top_title})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -141,9 +154,18 @@ public class MainActivity extends CoreFragmentActivity {
                         EventPublisher.getInstance().sendInsertDataSuccEvent(new Event.InsertDataSuccEvent());
                     }
                 });
+
                 break;
             default:
                 break;
+        }
+    }
+
+    private File getCacheFile() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            return getExternalCacheDir();
+        } else {
+            return getCacheDir();
         }
     }
 
